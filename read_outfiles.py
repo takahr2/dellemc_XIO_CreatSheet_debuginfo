@@ -19,7 +19,23 @@ class read_xmclioutfiles:
                     clusters.append(cluster)
             
         return clusters
-    
+
+    def read_showxmsout(self):
+        showxmsoutpath = pathlib.Path(self.xmclifolder + '\\ShowXms.out')
+        with open (showxmsoutpath, mode='r', encoding='utf-8') as showxmsout:
+            xmslist = []
+            for index, xmsinfo in enumerate(showxmsout):
+                if index == 0:
+                    pass
+                else:
+                    xms = xmsinfo.split(' ')
+                    xms = [a for a in xms if a != '']
+                    xmslist.append(xms)
+            
+        return xmslist
+
+
+
     def read_showvolumesout(self):
         showvolumeoutpath = pathlib.Path(self.xmclifolder + '\\ShowVolumes.out')
         with open(showvolumeoutpath, mode='r', encoding='utf-8') as showvolumeout:
@@ -126,11 +142,13 @@ def test():
     lunmappings = readxmcli.read_showlunmappingsout()
     snapsets = readxmcli.read_showallsnapshotsetout()
     cg = readxmcli.read_allshowcgout()
+    xms = readxmcli.read_showxmsout()
     print(clusters)
     print(volumes)
     print(lunmappings)
     print(snapsets)
     print(cg)
+    print(xms)
 
 if __name__ == '__main__':
     test()
