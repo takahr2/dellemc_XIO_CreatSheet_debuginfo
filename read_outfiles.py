@@ -34,7 +34,33 @@ class read_xmclioutfiles:
             
         return xmslist
 
+    def read_showtargetsout(self):
+        showtargetsoutpath = pathlib.Path(self.xmclifolder + '\\ShowTargets.out')
+        with open (showtargetsoutpath, mode='r', encoding='utf-8') as showtargetsout:
+            targets = []
+            for index, targetinfo in enumerate(showtargetsout):
+                if index == 0:
+                    pass
+                else:
+                    target = targetinfo.split(' ')
+                    target = [a for a in target if a != '']
+                    targets.append(target)
+            
+        return targets
 
+    def read_showinitiatorsout(self):
+        showinitiatorsoutpath = pathlib.Path(self.xmclifolder + '\\ShowInitiators.out')
+        with open (showinitiatorsoutpath, mode='r', encoding='utf-8') as showinitiatorsout:
+            initiators = []
+            for index, initiatorinfo in enumerate(showinitiatorsout):
+                if index == 0:
+                    pass
+                else:
+                    initiator = initiatorinfo.split(' ')
+                    initiator = [a for a in initiator if a != '']
+                    initiators.append(initiator)
+            
+        return initiators
 
     def read_showvolumesout(self):
         showvolumeoutpath = pathlib.Path(self.xmclifolder + '\\ShowVolumes.out')
@@ -143,12 +169,16 @@ def test():
     snapsets = readxmcli.read_showallsnapshotsetout()
     cg = readxmcli.read_allshowcgout()
     xms = readxmcli.read_showxmsout()
+    targets = readxmcli.read_showtargetsout()
+    initiators = readxmcli.read_showinitiatorsout()
     print(clusters)
     print(volumes)
     print(lunmappings)
     print(snapsets)
     print(cg)
     print(xms)
+    print(targets)
+    print(initiators)
 
 if __name__ == '__main__':
     test()
