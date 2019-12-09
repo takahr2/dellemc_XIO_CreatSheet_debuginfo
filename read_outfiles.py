@@ -160,8 +160,8 @@ class read_xmclioutfiles:
             
         return ConsistencyGroups
 
-def test():
-    xmcli = 'xmcli.4.0.1'
+def concatinate_to_dict(xmcli):
+    xmcli = xmcli
     readxmcli = read_xmclioutfiles(xmcli)
     clusters = readxmcli.read_showclustersinfoout()
     volumes = readxmcli.read_showvolumesout()
@@ -171,15 +171,28 @@ def test():
     xms = readxmcli.read_showxmsout()
     targets = readxmcli.read_showtargetsout()
     initiators = readxmcli.read_showinitiatorsout()
-    print(clusters)
-    print(volumes)
-    print(lunmappings)
-    print(snapsets)
-    print(cg)
-    print(xms)
-    print(targets)
-    print(initiators)
+    #print(clusters)
+    #print(volumes)
+    #print(lunmappings)
+    #print(snapsets)
+    #print(cg)
+    #print(xms)
+    #print(targets)
+    #print(initiators)
+    xiodict = {
+        'xms': xms,
+        'clusters': clusters,
+        'volumes': volumes,
+        'lunmappings': lunmappings,
+        'snapsets': snapsets,
+        'cg': cg,
+        'targets': targets,
+        'initiators': initiators
+        }
+    return xiodict
 
 if __name__ == '__main__':
-    test()
+    xmclidir = 'xmcli'
+    xio = concatinate_to_dict(xmclidir)
+    print(xio)
 
