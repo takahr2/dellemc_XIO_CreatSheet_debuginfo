@@ -192,7 +192,7 @@ def concatinate_to_dict(xmcli):
     return xiodict
 
 if __name__ == '__main__':
-    xmclidir = 'xmcli'
+    xmclidir = 'latest/xms/xmcli'
     xio = concatinate_to_dict(xmclidir)
-    print(xio)
+    print(xio['cg'])
 

@@ -1,5 +1,6 @@
 import pprint
 import read_outfiles
+import json
 
 class xinfo_to_clusterjson:
 
@@ -34,7 +35,7 @@ class xinfo_to_clusterjson:
             clusterinfosub['SW-Version'] = clusterinfo[14]
             clusterinfosub['SerialNumber'] = clusterinfo[15]
 
-            xmsdict[clusterinfo[0]][0]['clusterinfo'].append({'clusterinfo': clusterinfosub})
+            xmsdict[clusterinfo[0]][0]['clusterinfo'].append(clusterinfosub)
         
         for volumeinfo in self.xinfodict['volumes']:
             volumeinfosub = {}
@@ -56,12 +57,23 @@ class xinfo_to_clusterjson:
 
             xmsdict[lunmappingsinfo[0]][0]['lunmappings'].append(mappingssub)
 
-        return xmsdict
-        
+        xmsjson = json.dumps(xmsdict)
+
+        return xmsjson, xmsdict
+
+def json_dump(jsonfile):
+    parsed = json.loads(jsonfile)
+    with open('xio.json', 'w') as xjson:
+        json.dump(parsed, xjson, ensure_ascii=False, indent=4, sort_keys=True, separators=(', ', ': '))
+
+
 if __name__ == '__main__':
-    testdict = read_outfiles.concatinate_to_dict('xmcli')
-    forexldict = xinfo_to_clusterjson(testdict).create_dict_forexcel()
-    pprint.pprint(forexldict['vxi08-AC'][0]['lunmappings'])
+    testdict = read_outfiles.concatinate_to_dict('latest/xms/xmcli')
+    print(testdict['snapsets'])
+    xmsjson, forexldict = xinfo_to_clusterjson(testdict).create_dict_forexcel()
+    #pprint.pprint(forexldict['XtremIO_01_L'][0]['lunmappings'])
+    json_dump(xmsjson)
+
     #pprint.pprint(forexldict['xms'])
     #pprint.pprint(forexldict)
 
