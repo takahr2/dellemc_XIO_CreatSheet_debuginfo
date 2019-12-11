@@ -56,6 +56,46 @@ class xinfo_to_clusterjson:
             mappingssub['HLU'] = lunmappingsinfo[8]
 
             xmsdict[lunmappingsinfo[0]][0]['lunmappings'].append(mappingssub)
+        
+        for snapshotsetinfo in self.xinfodict['snapsets']:
+            snapsetsub = {}
+            snapsetsub['SnapShotSet-Name'] = snapshotsetinfo[0]
+            snapsetsub['Consistency-Group-Name'] = snapshotsetinfo[1]
+            snapsetsub['cluster-Name'] = snapshotsetinfo[2]
+            snapsetsub['Volume-List'] = snapshotsetinfo[3:]
+
+            xmsdict[snapshotsetinfo[2]][0]['snapsets'].append(snapsetsub)
+        
+        for cginfo in self.xinfodict['cg']:
+            cgsub = {}
+            cgsub['CG-Name'] = cginfo[0]
+            cgsub['Cluster-Name'] = cginfo[1]
+            cgsub['Volume-List'] = cginfo[2:]
+
+            xmsdict[cginfo[1]][0]['cg'].append(cgsub)
+        
+        for targetinfo in self.xinfodict['targets']:
+            targetsub = {}
+            targetsub['Target-Name'] = targetinfo[0]
+            targetsub['index'] = targetinfo[1]
+            targetsub['cluster-Name'] = targetinfo[2]
+            targetsub['Port-Type'] = targetinfo[4]
+            targetsub['Port-Address'] = targetinfo[5]
+            targetsub['Port-State'] = targetinfo[8]
+            targetsub['Storage-Controller-Name'] = targetinfo[10]
+
+            xmsdict[targetinfo[2]][0]['targets'].append(targetsub)
+
+        for initiatorinfo in self.xinfodict['initiators']:
+            initiatorsub = {}
+            initiatorsub['Initiator-Nam'] = initiatorinfo[0]
+            initiatorsub['Index'] = initiatorinfo[1]
+            initiatorsub['Cluster-Name'] = initiatorinfo[2]
+            initiatorsub['Port-Type'] = initiatorinfo[4]
+            initiatorsub['Port-Address'] = initiatorinfo[5]
+            initiatorsub['IG-Name'] = initiatorinfo[6]
+
+            xmsdict[initiatorinfo[2]][0]['initiators'].append(initiatorsub)
 
         xmsjson = json.dumps(xmsdict)
 
@@ -68,10 +108,10 @@ def json_dump(jsonfile):
 
 
 if __name__ == '__main__':
-    testdict = read_outfiles.concatinate_to_dict('latest/xms/xmcli')
-    print(testdict['snapsets'])
+    testdict = read_outfiles.concatinate_to_dict('latest\\xms\\xmcli')
+    #pprint.pprint(testdict['initiators'])
     xmsjson, forexldict = xinfo_to_clusterjson(testdict).create_dict_forexcel()
-    #pprint.pprint(forexldict['XtremIO_01_L'][0]['lunmappings'])
+    #pprint.pprint(forexldict['XtremIO_01_L'][0]['initiators'])
     json_dump(xmsjson)
 
     #pprint.pprint(forexldict['xms'])
