@@ -101,18 +101,20 @@ class xinfo_to_clusterjson:
 
         return xmsjson, xmsdict
 
-def json_dump(jsonfile):
+def json_dump(jsonfile, filename):
     parsed = json.loads(jsonfile)
-    with open('xio.json', 'w') as xjson:
+    with open(filename, 'w') as xjson:
         json.dump(parsed, xjson, ensure_ascii=False, indent=4, sort_keys=True, separators=(', ', ': '))
+    return xjson
 
 
 if __name__ == '__main__':
+    ### unittest
     testdict = readfile.concatinate_to_dict('latest\\xms\\xmcli')
     #pprint.pprint(testdict['initiators'])
     xmsjson, forexldict = xinfo_to_clusterjson(testdict).create_dict_forexcel()
     #pprint.pprint(forexldict['XtremIO_01_L'][0]['initiators'])
-    json_dump(xmsjson)
+    json_dump(xmsjson, 'xio.json')
 
     #pprint.pprint(forexldict['xms'])
     #pprint.pprint(forexldict)
