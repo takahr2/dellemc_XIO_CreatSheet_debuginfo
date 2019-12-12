@@ -14,9 +14,10 @@ class debuginfo_extract:
             for dirname in xtarfile.getmembers():
                 if 'xmcli' in dirname.name:
                     xmclidir.append(dirname)
-                    
-            xtarfile.extractall(members=xmclidir)
-            xmclitopdir = xmclidir[0].name
+            #print(xmclidir)
+            workfolder = 'work'        
+            xtarfile.extractall(workfolder, members=xmclidir)
+            xmclitopdir = os.path.join(workfolder, xmclidir[0].name.replace('events_history.csv', ''))
 
         return xmclitopdir
 

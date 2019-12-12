@@ -1,6 +1,7 @@
 import pprint
 import libs.read_outfiles as readfile
 import json
+import os
 
 class xinfo_to_clusterjson:
 
@@ -103,7 +104,8 @@ class xinfo_to_clusterjson:
 
 def json_dump(jsonfile, filename):
     parsed = json.loads(jsonfile)
-    with open(filename, 'w') as xjson:
+    outputpath = os.path.join('output', filename)
+    with open(outputpath, 'w') as xjson:
         json.dump(parsed, xjson, ensure_ascii=False, indent=4, sort_keys=True, separators=(', ', ': '))
     return xjson
 
@@ -118,8 +120,6 @@ if __name__ == '__main__':
 
     #pprint.pprint(forexldict['xms'])
     #pprint.pprint(forexldict)
-
-
 
 '''
     xiodict = {
