@@ -61,11 +61,12 @@ class xinfo_to_clusterjson:
         for snapshotsetinfo in self.xinfodict['snapsets']:
             snapsetsub = {}
             snapsetsub['SnapShotSet-Name'] = snapshotsetinfo[0]
-            snapsetsub['Consistency-Group-Name'] = snapshotsetinfo[1]
-            snapsetsub['cluster-Name'] = snapshotsetinfo[2]
-            snapsetsub['Volume-List'] = snapshotsetinfo[3:]
+            snapsetsub['Index'] = snapshotsetinfo[1]
+            snapsetsub['Consistency-Group-Name'] = snapshotsetinfo[2]
+            snapsetsub['cluster-Name'] = snapshotsetinfo[3]
+            snapsetsub['Volume-List'] = snapshotsetinfo[4:]
 
-            xmsdict[snapshotsetinfo[2]][0]['snapsets'].append(snapsetsub)
+            xmsdict[snapshotsetinfo[3]][0]['snapsets'].append(snapsetsub)
         
         for cginfo in self.xinfodict['cg']:
             cgsub = {}
@@ -89,7 +90,7 @@ class xinfo_to_clusterjson:
 
         for initiatorinfo in self.xinfodict['initiators']:
             initiatorsub = {}
-            initiatorsub['Initiator-Nam'] = initiatorinfo[0]
+            initiatorsub['Initiator-Name'] = initiatorinfo[0]
             initiatorsub['Index'] = initiatorinfo[1]
             initiatorsub['Cluster-Name'] = initiatorinfo[2]
             initiatorsub['Port-Type'] = initiatorinfo[4]

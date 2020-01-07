@@ -105,6 +105,10 @@ class read_xmclioutfiles:
                     memberflag = 1
                     snapsetname = ''.join(snapshotsetinforow[1].rstrip().lstrip())
                     snapsetsublist.append(snapsetname)
+                
+                elif snapshotsetinforow[0] == 'Index':
+                    idx = snapshotsetinforow[1].strip(' ').rstrip()
+                    snapsetsublist.append(idx)
             
                 elif snapshotsetinforow[0] == 'Consistency-Group-Name':
                     cgname = ''.join(snapshotsetinforow[1].rstrip().lstrip())
@@ -152,7 +156,6 @@ class read_xmclioutfiles:
                 elif cgrow[0] == 'Index':
                     idx = cgrow[1].strip(' ').rstrip()
                     cgsublist.append(idx)
-                    tagsflag = 0
                 
                 elif cgrow[0] == 'Volume-List':
                     memberflag = 0
@@ -200,5 +203,5 @@ def concatinate_to_dict(xmcli):
 if __name__ == '__main__':
     xmclidir = 'C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\input\\small\\xms\\xmcli'
     xio = concatinate_to_dict(xmclidir)
-    print(xio['cg'])
+    print(xio['snapsets'])
 
