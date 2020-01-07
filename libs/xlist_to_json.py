@@ -70,10 +70,10 @@ class xinfo_to_clusterjson:
         for cginfo in self.xinfodict['cg']:
             cgsub = {}
             cgsub['CG-Name'] = cginfo[0]
-            cgsub['Cluster-Name'] = cginfo[1]
-            cgsub['Volume-List'] = cginfo[2:]
-
-            xmsdict[cginfo[1]][0]['cg'].append(cgsub)
+            cgsub['index'] = cginfo[1]
+            cgsub['Cluster-Name'] = cginfo[2]            
+            cgsub['Volume-List'] = cginfo[3:]
+            xmsdict[cginfo[2]][0]['cg'].append(cgsub)
         
         for targetinfo in self.xinfodict['targets']:
             targetsub = {}
@@ -112,7 +112,7 @@ def json_dump(jsonfile, filename):
 
 if __name__ == '__main__':
     ### unittest
-    testdict = readfile.concatinate_to_dict('latest\\xms\\xmcli')
+    testdict = readfile.concatinate_to_dict('C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\input\\small\\xms\\xmcli')
     #pprint.pprint(testdict['initiators'])
     xmsjson, forexldict = xinfo_to_clusterjson(testdict).create_dict_forexcel()
     #pprint.pprint(forexldict['XtremIO_01_L'][0]['initiators'])

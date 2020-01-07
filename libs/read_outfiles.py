@@ -133,6 +133,7 @@ class read_xmclioutfiles:
             ConsistencyGroups = []
             cgsublist = []
             memberflag = 0
+            tagsflag = 0
             for index, cginfo in enumerate(showcgout):                
                 cgrow = cginfo.split(':')
 
@@ -147,6 +148,11 @@ class read_xmclioutfiles:
                     cluster = cgrow[1].split('\'')
                     cluster = cluster[3]
                     cgsublist.append(cluster)
+                
+                elif cgrow[0] == 'Index':
+                    idx = cgrow[1].strip(' ').rstrip()
+                    cgsublist.append(idx)
+                    tagsflag = 0
                 
                 elif cgrow[0] == 'Volume-List':
                     memberflag = 0
@@ -192,7 +198,7 @@ def concatinate_to_dict(xmcli):
     return xiodict
 
 if __name__ == '__main__':
-    xmclidir = 'latest/xms/xmcli'
+    xmclidir = 'C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\input\\small\\xms\\xmcli'
     xio = concatinate_to_dict(xmclidir)
     print(xio['cg'])
 
