@@ -122,7 +122,7 @@ class read_xmclioutfiles:
                 elif snapshotsetinforow[0] == 'Volume-List':
                     memberflag = 0
                 
-                elif snapshotsetinforow[0] == '		Name':
+                elif memberflag == 0 and snapshotsetinforow[0] == '		Name':
                     snaps = ''.join(snapshotsetinforow[1].rstrip().lstrip())
                     snapsetsublist.append(snaps)
             
@@ -137,7 +137,6 @@ class read_xmclioutfiles:
             ConsistencyGroups = []
             cgsublist = []
             memberflag = 0
-            tagsflag = 0
             for index, cginfo in enumerate(showcgout):                
                 cgrow = cginfo.split(':')
 

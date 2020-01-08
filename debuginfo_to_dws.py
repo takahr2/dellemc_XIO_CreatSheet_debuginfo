@@ -50,7 +50,7 @@ def main():
     clearworkdir()
     print('XtremIO Design Worksheet Creation is Finish')
     while True:
-        finishinput = input('Please input Enter kye to finish...')
+        finishinput = input('Please input Enter key to finish...')
         if not finishinput:
             break
 
