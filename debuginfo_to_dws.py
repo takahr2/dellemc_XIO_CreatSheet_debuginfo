@@ -42,6 +42,12 @@ def createxdws(jsonlist):
 def main():
     xjsonfilelist = debuginfo_to_json()
     createxdws(xjsonfilelist)
+    print('XtremIO Design Worksheet Creation is Finish')
+    while True:
+        finishinput = input('Please input Enter kye to finish...')
+        if not finishinput:
+            break
+
 
 if __name__ == '__main__':
     main()
