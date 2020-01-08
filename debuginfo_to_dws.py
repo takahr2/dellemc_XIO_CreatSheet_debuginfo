@@ -23,7 +23,7 @@ def debuginfo_to_json():
             jsonfilename = str(fileidx) + '_xio.json'
             jsonfile = xjson.json_dump(xiojson, jsonfilename)
             fileidx += 1
-            xjsonpath = os.path.join('input', jsonfilename)
+            xjsonpath = os.path.join('output', jsonfilename)
             print(xjsonpath)
             xjsonfullpath = os.path.abspath(xjsonpath)
 
@@ -31,9 +31,17 @@ def debuginfo_to_json():
         
     return xjsonlist
 
+def createxdws(jsonlist):
+    output = os.path.abspath('output')
+    template =  os.path.abspath('template\\3_XtremIO_Template_Design_Worksheet_v1.0.xlsx')
+    
+    for xjson in jsonlist:
+        todws.create_xdws(xjson).createdws(template, output)
+    
+        
 def main():
-    clidir = debuginfo_to_json()
-    print(clidir)
+    xjsonfilelist = debuginfo_to_json()
+    createxdws(xjsonfilelist)
 
 if __name__ == '__main__':
     main()
