@@ -5,6 +5,7 @@ import libs.xlist_to_json as xjson
 import libs.xjson_to_dws as todws
 import os
 import pathlib
+import shutil
 
 def debuginfo_to_json():
     inputdirlist = pathlib.Path('input').iterdir()
@@ -37,11 +38,16 @@ def createxdws(jsonlist):
     
     for xjson in jsonlist:
         todws.create_xdws(xjson).createdws(template, output)
-    
+
+def clearworkdir():
+    workdir = 'work'
+    shutil.rmtree(workdir)
+    os.mkdir(workdir)    
         
 def main():
     xjsonfilelist = debuginfo_to_json()
     createxdws(xjsonfilelist)
+    clearworkdir()
     print('XtremIO Design Worksheet Creation is Finish')
     while True:
         finishinput = input('Please input Enter kye to finish...')
