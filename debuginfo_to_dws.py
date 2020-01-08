@@ -48,7 +48,6 @@ def main():
         if not finishinput:
             break
 
-
 if __name__ == '__main__':
     main()
     
