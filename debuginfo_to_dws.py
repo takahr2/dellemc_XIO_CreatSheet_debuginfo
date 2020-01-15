@@ -42,13 +42,20 @@ def createxdws(jsonlist):
 def clearworkdir():
     workdir = 'work'
     shutil.rmtree(workdir)
-    os.mkdir(workdir)    
+    os.mkdir(workdir)
+    gitfile = os.path.join(workdir, '.gitkeep')
+    
+    with open(gitfile, 'w', encoding='utf-8') as f:
+        pass    
         
 def main():
     xjsonfilelist = debuginfo_to_json()
     createxdws(xjsonfilelist)
     clearworkdir()
-    print('XtremIO Design Worksheet Creation is Finish')
+    print('')
+    print('XtremIO Design Worksheet Creation is Finish.')
+    print('Design Worksheet and json files are output to "output" folder.')
+    print('')
     while True:
         finishinput = input('Please input Enter key to finish...')
         if not finishinput:

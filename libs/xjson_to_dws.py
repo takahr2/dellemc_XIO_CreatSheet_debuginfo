@@ -28,13 +28,24 @@ class create_xdws:
             dwsfile = os.path.join(outfolder, dwsname)
             wb = opxl.load_workbook(dwsfile)
             for clusterinfo in xioinfo[cluster]:
-                
+
+                baseinfo = clusterinfo['clusterinfo'][0]
+                baseinfows = wb['Network情報']
+                clusternamecell = baseinfows.cell(row=4, column=3)
+                clusternamecell.value = baseinfo['cluster-Name']
+
+                xioscell = baseinfows.cell(row=5, column=8)
+                xioscell.value = baseinfo['SW-Version']
+
+                serialcell = baseinfows.cell(row=6, column=8)
+                serialcell.value = baseinfo['SerialNumber']
+             
                 volstartrow = 7
                 cgstartrow = 5
                 snapsetstartrow = 5
                 initiatorstartrow = 5
                 lunmapstartrow = 5
-                
+
                 for volinfo in clusterinfo['volumeinfo']:
                     volws = wb['LUN一覧']
                     
