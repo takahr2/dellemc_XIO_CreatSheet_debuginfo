@@ -96,6 +96,7 @@ class read_xmclioutfiles:
             snapshotsets = []
             snapsetsublist = []
             memberflag = 0
+            indexflag = 0
             for index, snapshotsetinfo in enumerate(showallsnapshotsetout):                
                 snapshotsetinforow = snapshotsetinfo.split(':')
 
@@ -106,9 +107,10 @@ class read_xmclioutfiles:
                     snapsetname = ''.join(snapshotsetinforow[1].rstrip().lstrip())
                     snapsetsublist.append(snapsetname)
                 
-                elif snapshotsetinforow[0] == 'Index':
+                elif snapshotsetinforow[0] == 'Index' and indexflag == 0:
                     idx = snapshotsetinforow[1].strip(' ').rstrip()
                     snapsetsublist.append(idx)
+                    indexflag = 1
             
                 elif snapshotsetinforow[0] == 'Consistency-Group-Name':
                     cgname = ''.join(snapshotsetinforow[1].rstrip().lstrip())
@@ -121,6 +123,7 @@ class read_xmclioutfiles:
                 
                 elif snapshotsetinforow[0] == 'Volume-List':
                     memberflag = 0
+                    indexflag = 0
                 
                 elif memberflag == 0 and snapshotsetinforow[0] == '		Name':
                     snaps = ''.join(snapshotsetinforow[1].rstrip().lstrip())
@@ -137,6 +140,7 @@ class read_xmclioutfiles:
             ConsistencyGroups = []
             cgsublist = []
             memberflag = 0
+            indexflag = 0
             for index, cginfo in enumerate(showcgout):                
                 cgrow = cginfo.split(':')
 
@@ -152,12 +156,14 @@ class read_xmclioutfiles:
                     cluster = cluster[3]
                     cgsublist.append(cluster)
                 
-                elif cgrow[0] == 'Index':
+                elif cgrow[0] == 'Index' and indexflag == 0:
                     idx = cgrow[1].strip(' ').rstrip()
                     cgsublist.append(idx)
+                    indexflag = 1
                 
                 elif cgrow[0] == 'Volume-List':
                     memberflag = 0
+                    indexflag = 0
                 
                 elif memberflag == 0 and cgrow[0] == '		Name':
                     snaps = ''.join(cgrow[1].rstrip().lstrip())
@@ -200,7 +206,7 @@ def concatinate_to_dict(xmcli):
     return xiodict
 
 if __name__ == '__main__':
-    xmclidir = 'C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\input\\small\\xms\\xmcli'
+    xmclidir = 'C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\testfiles\\small\\xms\\xmcli'
     xio = concatinate_to_dict(xmclidir)
     print(xio['snapsets'])
 
