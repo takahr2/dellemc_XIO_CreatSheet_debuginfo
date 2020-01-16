@@ -103,6 +103,9 @@ class create_xdws:
                     initiatornamecell = initiatorws.cell(row=initiatorstartrow, column=initiatorstartcolumn + 1)
                     initiatornamecell.value = initiatorinfo['Initiator-Name']
 
+                    initiatorigcell = initiatorws.cell(row=initiatorstartrow, column=initiatorstartcolumn + 2)
+                    initiatorigcell.value = initiatorinfo['Initiator-OS']
+
                     initiatorwwncell = initiatorws.cell(row=initiatorstartrow, column=initiatorstartcolumn + 5)
                     initiatorwwncell.value = initiatorinfo['Port-Address']
 

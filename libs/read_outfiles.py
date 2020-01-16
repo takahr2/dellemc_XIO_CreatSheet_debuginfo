@@ -208,5 +208,5 @@ def concatinate_to_dict(xmcli):
 if __name__ == '__main__':
     xmclidir = 'C:\\Users\\takahr2\\Projects\\git\\dellemc_XIO_CreatSheet_debuginfo\\testfiles\\small\\xms\\xmcli'
     xio = concatinate_to_dict(xmclidir)
-    print(xio['snapsets'])
+    print(xio['initiators'])
 
