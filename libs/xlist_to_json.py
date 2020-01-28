@@ -96,7 +96,7 @@ class xinfo_to_clusterjson:
             initiatorsub['Port-Type'] = initiatorinfo[4]
             initiatorsub['Port-Address'] = initiatorinfo[5]
             initiatorsub['IG-Name'] = initiatorinfo[6]
-            initiatorsub['Initiator-OS'] = initiatorinfo[9].rstrip()
+            initiatorsub['Initiator-OS'] = initiatorinfo[-1].rstrip()
 
             xmsdict[initiatorinfo[2]][0]['initiators'].append(initiatorsub)
 
