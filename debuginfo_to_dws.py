@@ -13,7 +13,10 @@ def debuginfo_to_json():
     xjsonlist = []
     for difile in inputdirlist:
         if '.tar' in difile.name:
-            xmclidir = extract.debuginfo_extract(difile).xmcli_extract()
+            try:
+                xmclidir = extract.debuginfo_extract(difile).xmcli_extract()
+            except:
+                pass
             print(xmclidir)
 
             xiorawdict = outfiles.concatinate_to_dict(xmclidir)
@@ -34,7 +37,7 @@ def debuginfo_to_json():
 
 def createxdws(jsonlist):
     output = os.path.abspath('output')
-    template =  os.path.abspath('template\\3_XtremIO_Template_Design_Worksheet_v1.0.xlsx')
+    template =  os.path.abspath('template/3_XtremIO_Template_Design_Worksheet_v1.0.xlsx')
     
     for xjson in jsonlist:
         todws.create_xdws(xjson).createdws(template, output)

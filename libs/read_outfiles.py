@@ -7,7 +7,7 @@ class read_xmclioutfiles:
         self.xmclifolder = xmclifolder
     
     def read_showclustersinfoout(self):
-        showclusteroutpath = pathlib.Path(self.xmclifolder + '\\ShowClustersInfo.out')
+        showclusteroutpath = pathlib.Path(self.xmclifolder + 'ShowClustersInfo.out')
         with open (showclusteroutpath, mode='r', encoding='utf-8') as showclusterout:
             clusters = []
             for index, clusterinfo in enumerate(showclusterout):
@@ -21,7 +21,7 @@ class read_xmclioutfiles:
         return clusters
 
     def read_showxmsout(self):
-        showxmsoutpath = pathlib.Path(self.xmclifolder + '\\ShowXms.out')
+        showxmsoutpath = pathlib.Path(self.xmclifolder + 'ShowXms.out')
         with open (showxmsoutpath, mode='r', encoding='utf-8') as showxmsout:
             xmslist = []
             for index, xmsinfo in enumerate(showxmsout):
@@ -35,7 +35,7 @@ class read_xmclioutfiles:
         return xmslist
 
     def read_showtargetsout(self):
-        showtargetsoutpath = pathlib.Path(self.xmclifolder + '\\ShowTargets.out')
+        showtargetsoutpath = pathlib.Path(self.xmclifolder + 'ShowTargets.out')
         with open (showtargetsoutpath, mode='r', encoding='utf-8') as showtargetsout:
             targets = []
             for index, targetinfo in enumerate(showtargetsout):
@@ -49,7 +49,7 @@ class read_xmclioutfiles:
         return targets
 
     def read_showinitiatorsout(self):
-        showinitiatorsoutpath = pathlib.Path(self.xmclifolder + '\\ShowInitiators.out')
+        showinitiatorsoutpath = pathlib.Path(self.xmclifolder + 'ShowInitiators.out')
         with open (showinitiatorsoutpath, mode='r', encoding='utf-8') as showinitiatorsout:
             initiators = []
             for index, initiatorinfo in enumerate(showinitiatorsout):
@@ -63,7 +63,7 @@ class read_xmclioutfiles:
         return initiators
 
     def read_showvolumesout(self):
-        showvolumeoutpath = pathlib.Path(self.xmclifolder + '\\ShowVolumes.out')
+        showvolumeoutpath = pathlib.Path(self.xmclifolder + 'ShowVolumes.out')
         with open(showvolumeoutpath, mode='r', encoding='utf-8') as showvolumeout:
             volumes = []
             for index, volumeinfo in enumerate(showvolumeout):
@@ -77,7 +77,7 @@ class read_xmclioutfiles:
         return volumes
     
     def read_showlunmappingsout(self):
-        showlonmappingsoutpath = pathlib.Path(self.xmclifolder + '\\ShowLunMappings.out')
+        showlonmappingsoutpath = pathlib.Path(self.xmclifolder + 'ShowLunMappings.out')
         with open(showlonmappingsoutpath, mode = 'r', encoding='utf-8') as showlonmappingsout:
             lunmappings = []
             for index, lunmappinginfo in enumerate(showlonmappingsout):
@@ -91,12 +91,13 @@ class read_xmclioutfiles:
         return lunmappings
     
     def read_showallsnapshotsetout(self):
-        showallsnapshotsetpath = pathlib.Path(self.xmclifolder + '\\ShowAllSnapshotsSet.out')
+        showallsnapshotsetpath = pathlib.Path(self.xmclifolder + 'ShowAllSnapshotsSet.out')
         with open(showallsnapshotsetpath, mode='r', encoding='utf-8') as showallsnapshotsetout:
             snapshotsets = []
             snapsetsublist = []
             memberflag = 0
             indexflag = 0
+            Cluster_id_err_flag = 0
             for index, snapshotsetinfo in enumerate(showallsnapshotsetout):                
                 snapshotsetinforow = snapshotsetinfo.split(':')
 
@@ -117,10 +118,18 @@ class read_xmclioutfiles:
                     snapsetsublist.append(cgname)
                 
                 elif snapshotsetinforow[0] == 'Cluster-Id':
-                    cluster = snapshotsetinforow[1].split('\'')
-                    cluster = cluster[3]
-                    snapsetsublist.append(cluster)
+                    try:
+                        cluster = snapshotsetinforow[1].split('\'')
+                        cluster = cluster[3]
+                        snapsetsublist.append(cluster)
+                    except IndexError:
+                        Cluster_id_err_flag = 1
                 
+                elif Cluster_id_err_flag == 1:
+                    cluster_id = snapshotsetinforow[1].rstrip().replace(' ', '')
+                    snapsetsublist.append(cluster_id)
+                    Cluster_id_err_flag = 0
+                                    
                 elif snapshotsetinforow[0] == 'Volume-List':
                     memberflag = 0
                     indexflag = 0
@@ -135,7 +144,7 @@ class read_xmclioutfiles:
         return snapshotsets
 
     def read_allshowcgout(self):
-        showcgoutpath = pathlib.Path(self.xmclifolder + '\\ShowAllConsistencyGroups.out')
+        showcgoutpath = pathlib.Path(self.xmclifolder + 'ShowAllConsistencyGroups.out')
         with open(showcgoutpath, mode='r', encoding='utf-8') as showcgout:
             ConsistencyGroups = []
             cgsublist = []
